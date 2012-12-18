@@ -13,4 +13,13 @@ class Route < ActiveRecord::Base
   scope :disabled, where(:enabled => false)
 
   accepts_nested_attributes_for :coords, :allow_destroy => true
+  
+  # GTFS support
+  comma :gtfs do
+    # Mapping Stop attributes to GTFS stops.txt fields.
+    id 'route_id'
+    short_name 'route_short_name'
+    name 'route_long_name'
+    3 'route_type'
+  end
 end

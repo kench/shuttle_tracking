@@ -17,6 +17,7 @@ class RoutesController < ApplicationController
       format.xml { render :xml => @routes }
       format.js { render :json => @routes }
       format.kml
+      format.csv { render :csv => Route.all, :style => :gtfs , :extension => 'txt' }
     end
   end
 
