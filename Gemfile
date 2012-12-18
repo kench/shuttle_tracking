@@ -30,3 +30,6 @@ gem 'RedCloth'
 
 # Use kaminari for pagination
 gem 'kaminari'
+
+# Use Comma for CSV/GTFS generation
+gem "comma", "~> 3.0"
