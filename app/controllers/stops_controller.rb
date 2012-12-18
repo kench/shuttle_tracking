@@ -28,6 +28,7 @@ class StopsController < ApplicationController
         }
       ) }
       format.kml
+      format.csv { render :csv => Stop.all, :style => :gtfs , :extension => 'txt' }
     end
   end
 

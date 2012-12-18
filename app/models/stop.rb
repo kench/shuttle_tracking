@@ -26,5 +26,13 @@ class Stop < ActiveRecord::Base
     self.short_name = self.short_name.parameterize
     true # So the save doesn't give up?
   end
-
+  
+  # GTFS support
+  comma :gtfs do
+    # Mapping Stop attributes to GTFS stops.txt fields.
+    id 'stop_id'
+    name 'stop_name'
+    latitude 'stop_lat'
+    longitude 'stop_lon'
+  end
 end
