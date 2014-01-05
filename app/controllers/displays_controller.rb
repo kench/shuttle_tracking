@@ -1,8 +1,18 @@
 class DisplaysController < ApplicationController
 
   def index
-    @pages = Page.order("name").frontpage
-    render :layout => 'full_map'
+    # Is this coming from an Android WebView?
+    if request.headers['X-Requested-With'] or params[:mobile] == "1"
+      # Redirect outdated applications to Play Store.
+      if request.headers['X-Requested-With'] == 'com.aktarer.rpishuttle'
+        render :file => "#{Rails.root}/public/mobile_redirect.html", :status => 403, :layout => false
+      else
+        render :layout => 'mobile_map', :template => 'displays/index_mobile.html.erb'
+      end
+    else
+      @pages = Page.order("name").frontpage
+      render :layout => 'full_map'
+    end
   end
 
   # Generate a static KML file, a snapshot of the system.

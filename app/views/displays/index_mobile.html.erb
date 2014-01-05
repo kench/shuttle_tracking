@@ -1,0 +1,54 @@
+<% content_for :js_ready do %>
+    //Setup the overlays
+    $("a[rel]").overlay({
+      top: 150,
+      onBeforeLoad: function() {
+        var wrap = this.getOverlay().find(".contentWrap");
+        wrap.load(this.getTrigger().attr("href"));
+      }
+    });
+    //Map work
+    var point = {latitude: <%= MAP_CENTER[:lat] %>, longitude: <%= MAP_CENTER[:long] %>};
+    map = setup_map(point, 15);
+    $.ajaxSetup({
+      timeout: <%= AJAX_TIMEOUT %>
+    });
+    $('#status').ajaxError(function(e, xhr, settings, exception){
+      $(this).text("Unable to load data.");
+      $('#loading_icon').hide();
+      $('#error_icon').show();
+    });
+    $('#status').ajaxStart(function(){
+      $(this).text("Loading...");
+      $('#error_icon').hide();
+      $('#loading_icon').show();
+    });
+    $('#status').ajaxSuccess(function(){
+      $('#loading_icon').hide();
+    });
+    updater = setInterval("update()", <%= UPDATE_INTERVAL %>);
+    routes_and_stops();
+    update(); //Run the first update instead of waiting.
+<% end %>
+<% content_for :js do %>
+  var current_data_path = '<%= current_vehicles_path(:format => 'js') %>';
+  var netlink_data_path = '<%= displays_netlink_path(:format => 'js') %>';
+  var base_icon = '<%= rotate_icon_path(:id => ':id', :heading => ':heading', :format => 'png') %>';
+  var stop_icon_path = '<%= image_path "blue_dot.png" %>';
+<% end %>
+<div id="mapblock">
+  <div id="map_canvas"></div>
+  <div id="nav_container">
+    <%= link_to "http://webtech.union.rpi.edu" do %>
+      <%= image_tag 'little_wtg_logo.png', :alt => "Web Tech Group" %>
+    <% end %>
+  </div>
+</div>
+<div id="map_header">
+      <span id="loading_icon" style="display: none;"><%= image_tag 'full_map/loading.gif' %></span>
+      <span id="error_icon" style="display: none;"><%= image_tag 'full_map/error.png' %></span>
+      <span id="status">Loading...</span>
+</div>
+<div class="simple_overlay" id="overlay">
+  <div class="contentWrap"></div>
+</div>
