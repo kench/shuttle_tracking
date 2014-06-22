@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.2.18'
 
 gem "sqlite3", :require => "sqlite3",  :group => [:development, :test]
 gem "mysql", :require => "mysql",  :group => [:production]
