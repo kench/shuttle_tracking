@@ -2,7 +2,7 @@ class DisplaysController < ApplicationController
 
   def index
     # Is this coming from an Android WebView?
-    if request.headers['X-Requested-With'] or params[:mobile] == "1"
+    if request.user_agent.include? "Mobile Safari" or params[:mobile] == "1"
       # Redirect outdated applications to Play Store.
       if request.headers['X-Requested-With'] == 'com.aktarer.rpishuttle'
         render :file => "#{Rails.root}/public/mobile_redirect.html", :status => 403, :layout => false
