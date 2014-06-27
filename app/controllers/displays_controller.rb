@@ -7,7 +7,9 @@ class DisplaysController < ApplicationController
       if request.headers['X-Requested-With'] == 'com.aktarer.rpishuttle'
         render :file => "#{Rails.root}/public/mobile_redirect.html", :status => 403, :layout => false
       else
-        render :layout => 'mobile_map', :template => 'displays/index_mobile.html.erb'
+        # Placeholder for WebViews.
+        @pages = Page.order("name").frontpage
+        render :layout => 'full_map'
       end
     else
       @pages = Page.order("name").frontpage

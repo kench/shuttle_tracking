@@ -16,7 +16,7 @@ javascripts:
 stylesheets:
   map:
     - public/stylesheets/new.css
-  mobilemap:
-    - public/stylesheets/new-mobile.css
+  mobile:
+    - public/stylesheets/mobile.css
   backend:
     - public/stylesheets/general.css
